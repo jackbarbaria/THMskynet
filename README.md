@@ -19,7 +19,7 @@ I’ve been studying for the eLearnSecurity Junior Penetration Tester (eJPTv2) C
 <h2>My journey through Skynet:</h2>
 
 There are five tasks to complete in this module:
-1.	What is Miles password for his emails?
+1.	What is Miles' password for his emails?
 2.	What is the hidden directory?
 3.	What is the vulnerability called when you can include a remote file for malicious purposes?
 4.	What is the user flag?
