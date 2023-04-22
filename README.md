@@ -1,6 +1,7 @@
 <h1>TryHackMe Skynet CTF</h1>
 
 <h2>Overview</h2>
+<br />
 I’ve been studying for the eLearnSecurity Junior Penetration Tester (eJPTv2) Certification and recently completed INE’s lessons on SMB Enumeration. To supplement and practice what I learned, I searched TryHackMe for rooms that are tagged with SMB or samba and found Skynet! This was a fun Terminator themed CTF challenge that took me three or four hours to complete. I am glad I took notes throughout the process, so I could continue where I left off after taking breaks.
 <br />
 
@@ -15,10 +16,14 @@ I’ve been studying for the eLearnSecurity Junior Penetration Tester (eJPTv2) C
 - <b>Python’s http.server module</b>
 - <b>Metasploit</b>
 - <b>Linpeas</b>
+<br />
+<br />
 
-<h2>My journey through Skynet:</h2>
+<h2>My journey through Skynet.</h2>
 
-There are five tasks to complete in this module:
+https://tryhackme.com/room/skynet
+
+There are five tasks to complete in this TryHackMe room:
 1.	What is Miles' password for his emails?
 2.	What is the hidden directory?
 3.	What is the vulnerability called when you can include a remote file for malicious purposes?
