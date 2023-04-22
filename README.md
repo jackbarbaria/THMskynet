@@ -158,7 +158,7 @@ The directories admin, ai, and config led nowhere. However, Squirrelmail looked 
 <img src="https://i.imgur.com/Bu9rrjq.png" alt="Burp Suite"/>
 <br />
 <br />
-One of the passwords generated a status of 300. All of the other passwords resulted in a status of 200. The one that was different is likely the valid password.
+One of the passwords generated a status of 302. All of the other passwords resulted in a status of 200. The one that was different is likely the valid password.
 <br />
 <img src="https://i.imgur.com/l2gqZDh.png" height="80%" width="80%" alt="Burp Intruder"/>
 <br />
