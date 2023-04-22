@@ -158,7 +158,7 @@ One of the passwords generated a status of 300. All of the other passwords resul
 <img src="https://i.imgur.com/l2gqZDh.png" height="80%" width="80%" alt="Burp Intruder"/>
 <br />
 <br />
-<b>We're in!!</> I completed the first challenge task of discovering Miles’ email password!
+<b>We're in!!</b> I completed the first challenge task of discovering Miles’ email password!
 <br />
 <br />
 <img src="https://i.imgur.com/q4mTmcH.png" height="80%" width="80%" alt="Burp Intruder"/>
@@ -177,5 +177,64 @@ I opened the email with the subject “Samba Password reset.” This contained a
 ```
 
 This pointed to the hidden folder which was Miles’ homepage and was answer to the second challenge task.
+<br />
+<br />
+<img src="https://i.imgur.com/Ly3n6ZD.png" height="80%" width="80%" alt="Miles Dyson Homepage"/>
+<br />  
+<br />
+***
+Gaining further access
+***
+Gobuster came in handy once again. This time I used it to enumerate other directories within the hidden folder, which pointed to an administrator page:
+<br />
+<img src="https://i.imgur.com/tryXcBh.png" height="80%" width="80%" alt="Gobuster 2 Results"/>
+<br />  
+<br />
+This administrator page led to a Cuppa CMS login:
+<br />
+<img src="https://i.imgur.com/pDX4py8.png" height="80%" width="80%" alt="Cuppa CMS Login"/>
+<br />  
+<br />
+I tried Burp Suite with Intruder to see if the same log1.txt password list would provide access. Unfortunately, this produced no results.
 
+A Google search helped me find a remote file inclusion vulnerability associated with Cuppa CMS: https://www.exploit-db.com/exploits/25971
 
+Remote file inclusion would allow me to execute remote code on the target webserver, and is the answer to the third challenge task. To get this to work, I needed to create a reverse PHP shell and host it via a web server. To execute the code, I could append “/alerts/alertConfigField.php?urlConfig=url_containing_reverseshell” to the end of the administrator page.  
+
+To create the PHP reverse shell, I used MSFvenom Payload Creator (MSFPC). MSFPC is included in Kali Linux and it simplifies the process of creating a reverse shell payload. It also creates a customized Metasploit handler.
+<br />
+<br />
+<img src="https://i.imgur.com/sz8Vvu0.png" height="80%" width="80%" alt="MSFVenom"/>
+<br />  
+<br />
+I used Python’s http.server module to host the PHP reverse shell on my machine. Then, I started the MSF handler using the one created by MSFPC. I opened the URL and executed the code. The MSF handler was listening and created a Meterpreter session which I used to explore the target machine. The user flag for challenge task four was located in the /home/milesdyson folder:
+<br />
+<br />
+<img src="https://i.imgur.com/00zol8h.png" height="80%" width="80%" alt="User Flag"/>
+<br />  
+<br />
+I could not access the root folder with this session and needed to find a way to escalate my privileges. I used Meterpreter to upload Linpeas.sh to the /tmp folder. Linpeas is a script that runs on the target Linux machine and searches for ways to escalate privileges. After running Linpeas, I discovered a number of possible exploits that may allow access to root.
+<br />
+<br />
+<img src="https://i.imgur.com/mqDGhoz.png" height="80%" width="80%" alt="LinPeas"/>
+<br />  
+<br />
+Within MSFconsole, I searched for the first vulnerabilities related to “CVE-2017-16995” and found a potential exploit: 
+<b>exploit/linux/local/bpf_sign_extension_priv_esc</b>
+
+After running this exploit, I had a new Meterpreter session with root privileges. 
+<br />
+<br />
+<img src="https://i.imgur.com/0Hxdkdn.png" height="80%" width="80%" alt="GotRoot"/>
+<br />  
+<br />
+
+I found the root flag and completed the fifth and final challenge task!!
+<br />
+<br />
+<img src="https://i.imgur.com/v8AeFpg.png" height="80%" width="80%" alt="Root Flag"/>
+<br />  
+<br />
+
+<h2>Final Thoughts</h2>
+Although, this is considered an “easy” TryHackMe room, this was still a challenging set of tasks for me. I was glad for the opportunity to explore SMB shares and also to practice Linux privilege escalation. I had a few stops and starts with this one and needed to take a few breaks, which you can see by how often the IP addresses change in my screenshots. All in all, I had a lot of fun, and look forward to the next challenge.
